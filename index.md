@@ -1,10 +1,11 @@
 ---
 layout: home
 ---
-# About Theme
+# About Me
 
-This theme is Jekyll port of [vangeltzo.com](http://vangeltzo.com/) (by [Vangelis Tzortzis](https://github.com/srekoble)).
+我是一名IOS工程师,现在就职于杭州一家创业公司。折腾过电路板和嵌入式开发,一度痴迷于构建软硬件系统。
 
-To learn how to install and use this theme check out the [installation guide](http://taylantatli.me/Halve/halve-theme/) for more information.
+现在对web前后端、go语言并发处理、python数据挖掘,分布式云计算感兴趣。
 
-If you have a question, find a bug, or just want to say hi, please open an [issue on GitHub](https://github.com/TaylanTatli/Halve/issues/new).
+希望能多学习多接触新的技术,并能解决产品实现中碰到的具体问题。
+
