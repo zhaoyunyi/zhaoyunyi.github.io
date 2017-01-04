@@ -7,13 +7,25 @@
 }
 
 .block-right {
-  float: right;
+  float: left;
   overflow-y: auto;
 }
 
-.block-left,
+.block-left {
+  width: 40%;
+  height: 100%;
+  position: relative;
+  display: table;
+  > div {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .content {
+    height: 100%;
+  }
+}
 .block-right {
-  width: 50%;
+  width: 60%;
   height: 100%;
   position: relative;
   display: table;

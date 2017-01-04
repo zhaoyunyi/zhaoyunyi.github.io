@@ -1,6 +1,6 @@
 ---
 layout: post-list
-title: Posts
-description: "List of posts"
+title: 文章
+description: "文章列表"
 permalink: /posts.html
 ---

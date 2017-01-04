@@ -12,18 +12,18 @@
   url: http://taylantatli.me/Ramme
   image: https://raw.githubusercontent.com/TaylanTatli/Ramme/master/assets/img/screenshot-post.png
   completed: true
-
-- title: Daisy Pelican Theme
-  url: http://taylantatli.me/Daisy-Pelican-Theme/
-  image: https://raw.githubusercontent.com/TaylanTatli/Daisy-Pelican-Theme/master/Preview-1.png
-  completed: true
-
-- title: Block Icon Theme
-  url: https://github.com/TaylanTatli/Block-Icon-Theme
-  image: https://raw.githubusercontent.com/TaylanTatli/Block-Icon-Theme/master/Preview.png
-  completed: false
-
-- title: Start Page
-  url: http://taylantatli.me/StartPage/
-  image: https://raw.githubusercontent.com/TaylanTatli/StartPage/master/preview.png
-  completed: false
+#
+#- title: Daisy Pelican Theme
+#  url: http://taylantatli.me/Daisy-Pelican-Theme/
+#  image: https://raw.githubusercontent.com/TaylanTatli/Daisy-Pelican-Theme/master/Preview-1.png
+#  completed: true
+#
+#- title: Block Icon Theme
+#  url: https://github.com/TaylanTatli/Block-Icon-Theme
+#  image: https://raw.githubusercontent.com/TaylanTatli/Block-Icon-Theme/master/Preview.png
+#  completed: false
+#
+#- title: Start Page
+#  url: http://taylantatli.me/StartPage/
+#  image: https://raw.githubusercontent.com/TaylanTatli/StartPage/master/preview.png
+#  completed: false
