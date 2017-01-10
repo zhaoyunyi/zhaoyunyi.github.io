@@ -1,7 +1,7 @@
 # Site
 title: 赵耘谊
 description: If it ain't fun, don't do it.
-url:  http://127.0.0.1:4000 #http://127.0.0.1:4000  http://zhaoyunyi.com
+url:  http://zhaoyunyi.com #http://127.0.0.1:4000  http://zhaoyunyi.com
 logo: headImage.png #headImage.jpg                                   # Site logo
 locale: en_CH
 
