@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="开发环境：使用Ruby工具链统一开发环境 电脑mac环境安装统一的 ruby 环境和 Xcode 代码编译环境 在执行 bundle exec fastlane test 之前，需要使用xcode-select -s /Applications/Xcode12.2.app/Contents/Developer 来固定对应的Xcode版本  Xcode 的对应版本需要到苹果的开发者网站搜索并下载">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用Ruby工具链统一开发环境">
+<meta property="og:url" content="https://lrecord.cn/2021/02/25/2021-02-25-如何使用Ruby工具链统一开发环境/index.html">
+<meta property="og:site_name" content="Zhaoyunyi&#39;s Blog">
+<meta property="og:description" content="开发环境：使用Ruby工具链统一开发环境 电脑mac环境安装统一的 ruby 环境和 Xcode 代码编译环境 在执行 bundle exec fastlane test 之前，需要使用xcode-select -s /Applications/Xcode12.2.app/Contents/Developer 来固定对应的Xcode版本  Xcode 的对应版本需要到苹果的开发者网站搜索并下载">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2021/03/13/J7O1Aio8It3Yzxm.png">
+<meta property="og:updated_time" content="2021-03-28T01:59:59.076Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用Ruby工具链统一开发环境">
+<meta name="twitter:description" content="开发环境：使用Ruby工具链统一开发环境 电脑mac环境安装统一的 ruby 环境和 Xcode 代码编译环境 在执行 bundle exec fastlane test 之前，需要使用xcode-select -s /Applications/Xcode12.2.app/Contents/Developer 来固定对应的Xcode版本  Xcode 的对应版本需要到苹果的开发者网站搜索并下载">
+<meta name="twitter:image" content="https://i.loli.net/2021/03/13/J7O1Aio8It3Yzxm.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lrecord.cn/2021/02/25/2021-02-25-如何使用Ruby工具链统一开发环境/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>如何使用Ruby工具链统一开发环境 | Zhaoyunyi's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhaoyunyi's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Stay Hungry, Stay Foolish</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lrecord.cn/2021/02/25/2021-02-25-如何使用Ruby工具链统一开发环境/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhaoyunyi">
+      <meta itemprop="description" content="赵耘谊的博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhaoyunyi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何使用Ruby工具链统一开发环境
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-02-25 20:32:11" itemprop="dateCreated datePublished" datetime="2021-02-25T20:32:11+08:00">2021-02-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-03-28 09:59:59" itemprop="dateModified" datetime="2021-03-28T09:59:59+08:00">2021-03-28</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="开发环境：使用Ruby工具链统一开发环境"><a href="#开发环境：使用Ruby工具链统一开发环境" class="headerlink" title="开发环境：使用Ruby工具链统一开发环境"></a>开发环境：使用Ruby工具链统一开发环境</h2><ol>
+<li><h4 id="电脑mac环境安装统一的-ruby-环境和-Xcode-代码编译环境"><a href="#电脑mac环境安装统一的-ruby-环境和-Xcode-代码编译环境" class="headerlink" title="电脑mac环境安装统一的 ruby 环境和 Xcode 代码编译环境"></a>电脑mac环境安装统一的 ruby 环境和 Xcode 代码编译环境</h4><ul>
+<li><p>在执行 <code>bundle exec fastlane test</code> 之前，需要使用<code>xcode-select -s /Applications/Xcode12.2.app/Contents/Developer</code> 来固定对应的Xcode版本</p>
+</li>
+<li><p>Xcode 的对应版本需要到<a href="https://developer.apple.com/download/more/" target="_blank" rel="noopener">苹果的开发者网站</a>搜索并下载</p>
+</li>
+<li><p>然后确定安装好了homebrew并且版本较新，一般mac自带而且版本不会太大问题。</p>
+</li>
+<li><p>安装和卸载命令分别是（可能会失效去<a href="https://brew.sh/" target="_blank" rel="noopener">官网</a>复制使用最新的命令）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -c <span class="string">"<span class="variable">$(curl -fsSL &lt;https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh&gt;)</span>"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -c <span class="string">"<span class="variable">$(curl -fsSL &lt;https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh&gt;)</span>"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><h4 id="安装ruby版本管理工具-rbenv"><a href="#安装ruby版本管理工具-rbenv" class="headerlink" title="安装ruby版本管理工具 rbenv"></a>安装ruby版本管理工具 rbenv</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">brew install rbenv ruby-build rbenv-vars</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在shell配置里加入以下信息</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$HOME</span>/.rbenv/bin:<span class="variable">$PATH</span>"</span> </span><br><span class="line"><span class="built_in">eval</span> <span class="string">"<span class="variable">$(rbenv init -)</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后cd到对应目录下安装和设置项目的 Ruby 环境</span></span><br><span class="line">$ <span class="built_in">cd</span> $(PROJECT_DIR)</span><br><span class="line">$ rbenv install 3.0.0</span><br><span class="line">$ rbenv <span class="built_in">local</span> 3.0.0</span><br></pre></td></tr></table></figure>
+<p>一旦安装 rbenv 完毕，我们需要把以下的设置信息放到你的 Shell 配置文件里面，例如 ~/.bash_profile 或者 ~/.zshrc 等文件，这样能保证每次打开终端的时候都会初始化 rbenv。</p>
+<p>如果发现本地能安装的版本没有3.0.0，就需要更新一下brew brew update &amp;&amp; brew upgrade ruby-build, brew update 出现问题，需要git 更新仓库，<a href="https://app.yinxiang.com/shard/s33/nl/9679732/b12474e4-2006-44df-a6ae-0346f55a155e?title=brew update 更新时 shallow clone - 知乎" target="_blank" rel="noopener">替换源并且更新内容</a>。 </p>
+</li>
+<li><h4 id="安装ruby需要用到的依赖库管理工具-RubyGems-和-Bundler"><a href="#安装ruby需要用到的依赖库管理工具-RubyGems-和-Bundler" class="headerlink" title="安装ruby需要用到的依赖库管理工具 RubyGems 和 Bundler"></a>安装ruby需要用到的依赖库管理工具 RubyGems 和 Bundler</h4><p><code>gem install bundler</code> 之后 执行 <code>bundle init</code> 就可以生成一个 Gemfile 文件，像 CocoaPods 和 fastlane 等依赖包，我们就可以添加到这个文件里面。然后执行 <code>bundle install</code> 来安装各个 Gem。 Bundler 会自动生成一个 Gemfile.lock 文件来锁定所安装的 Gem 的版本。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source "https://rubygems.org"</span><br><span class="line">gem "cocoapods", "1.10.1"</span><br><span class="line">gem "fastlane", "2.178.0"</span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="Bundler-可以有效管理-CocoaPods-和-fastlane"><a href="#Bundler-可以有效管理-CocoaPods-和-fastlane" class="headerlink" title="Bundler 可以有效管理 CocoaPods 和 fastlane"></a>Bundler 可以有效管理 CocoaPods 和 fastlane</h4><p><img src="https://i.loli.net/2021/03/13/J7O1Aio8It3Yzxm.png" alt="J7O1Aio8It3Yzxm.png" style="zoom: 50%;"></p>
+</li>
+<li><h4 id="最后在工程里创建一个-shell-脚本，新项目或者新电脑只要运行一下这个脚本就可以构建出一套iOS的开发环境。"><a href="#最后在工程里创建一个-shell-脚本，新项目或者新电脑只要运行一下这个脚本就可以构建出一套iOS的开发环境。" class="headerlink" title="最后在工程里创建一个 shell 脚本，新项目或者新电脑只要运行一下这个脚本就可以构建出一套iOS的开发环境。"></a>最后在工程里创建一个 shell 脚本，新项目或者新电脑只要运行一下这个脚本就可以构建出一套iOS的开发环境。</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install ruby using rbenv</span></span><br><span class="line">ruby_version=`cat .ruby-version`</span><br><span class="line"><span class="keyword">if</span> [[ ! -d <span class="string">"<span class="variable">$HOME</span>/.rbenv/versions/<span class="variable">$ruby_version</span>"</span> ]]; <span class="keyword">then</span></span><br><span class="line">  rbenv install <span class="variable">$ruby_version</span>;</span><br><span class="line">  rbenv init</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install bunlder</span></span><br><span class="line">gem install bundler</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install all gems</span></span><br><span class="line">bundle install</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install all pods</span></span><br><span class="line">bundle <span class="built_in">exec</span> pod install</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/02/21/2021-02-21-如何快速学习一个新领域的知识/" rel="next" title="如何快速学习一个新领域的知识">
+                <i class="fa fa-chevron-left"></i> 如何快速学习一个新领域的知识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/12/2021-03-12-如何进行注意力管理/" rel="prev" title="如何进行注意力管理">
+                如何进行注意力管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhaoyunyi</p>
+              <div class="site-description motion-element" itemprop="description">赵耘谊的博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开发环境：使用Ruby工具链统一开发环境"><span class="nav-number">1.</span> <span class="nav-text">开发环境：使用Ruby工具链统一开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#电脑mac环境安装统一的-ruby-环境和-Xcode-代码编译环境"><span class="nav-number">1.0.1.</span> <span class="nav-text">电脑mac环境安装统一的 ruby 环境和 Xcode 代码编译环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装ruby版本管理工具-rbenv"><span class="nav-number">1.0.2.</span> <span class="nav-text">安装ruby版本管理工具 rbenv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装ruby需要用到的依赖库管理工具-RubyGems-和-Bundler"><span class="nav-number">1.0.3.</span> <span class="nav-text">安装ruby需要用到的依赖库管理工具 RubyGems 和 Bundler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bundler-可以有效管理-CocoaPods-和-fastlane"><span class="nav-number">1.0.4.</span> <span class="nav-text">Bundler 可以有效管理 CocoaPods 和 fastlane</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后在工程里创建一个-shell-脚本，新项目或者新电脑只要运行一下这个脚本就可以构建出一套iOS的开发环境。"><span class="nav-number">1.0.5.</span> <span class="nav-text">最后在工程里创建一个 shell 脚本，新项目或者新电脑只要运行一下这个脚本就可以构建出一套iOS的开发环境。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhaoyunyi</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

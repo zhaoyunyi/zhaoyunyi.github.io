@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="iOS OC SDK开发注意事项　　虽然现在公司的项目已经完成部分的Swift化，但是还有一些以前用OC开发的好用基础代码可以进行重用。为了在多个项目里更好的重用这些代码，最好的方式将这些基础库打包做成SDK进行统一维护和使用。在这个过程中也发现了一些需要注意的地方，和跟之前Swift制作framework不一样的地方。 　　再说一点题外话，因为现在Swift的ABI还不够稳定以及处于老代码足够稳">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="“iOS OC SDK开发注意事项”">
+<meta property="og:url" content="https://lrecord.cn/2018/01/08/2018-01-08- iOS OC SDK开发注意事项/index.html">
+<meta property="og:site_name" content="Zhaoyunyi&#39;s Blog">
+<meta property="og:description" content="iOS OC SDK开发注意事项　　虽然现在公司的项目已经完成部分的Swift化，但是还有一些以前用OC开发的好用基础代码可以进行重用。为了在多个项目里更好的重用这些代码，最好的方式将这些基础库打包做成SDK进行统一维护和使用。在这个过程中也发现了一些需要注意的地方，和跟之前Swift制作framework不一样的地方。 　　再说一点题外话，因为现在Swift的ABI还不够稳定以及处于老代码足够稳">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-03-28T01:59:59.075Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="“iOS OC SDK开发注意事项”">
+<meta name="twitter:description" content="iOS OC SDK开发注意事项　　虽然现在公司的项目已经完成部分的Swift化，但是还有一些以前用OC开发的好用基础代码可以进行重用。为了在多个项目里更好的重用这些代码，最好的方式将这些基础库打包做成SDK进行统一维护和使用。在这个过程中也发现了一些需要注意的地方，和跟之前Swift制作framework不一样的地方。 　　再说一点题外话，因为现在Swift的ABI还不够稳定以及处于老代码足够稳">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lrecord.cn/2018/01/08/2018-01-08- iOS OC SDK开发注意事项/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>“iOS OC SDK开发注意事项” | Zhaoyunyi's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhaoyunyi's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Stay Hungry, Stay Foolish</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lrecord.cn/2018/01/08/2018-01-08- iOS OC SDK开发注意事项/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhaoyunyi">
+      <meta itemprop="description" content="赵耘谊的博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhaoyunyi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">“iOS OC SDK开发注意事项”
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-01-08 00:00:00" itemprop="dateCreated datePublished" datetime="2018-01-08T00:00:00+08:00">2018-01-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-03-28 09:59:59" itemprop="dateModified" datetime="2021-03-28T09:59:59+08:00">2021-03-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="iOS-OC-SDK开发注意事项"><a href="#iOS-OC-SDK开发注意事项" class="headerlink" title="iOS OC SDK开发注意事项"></a>iOS OC SDK开发注意事项</h2><p>　　虽然现在公司的项目已经完成部分的Swift化，但是还有一些以前用OC开发的好用基础代码可以进行重用。为了在多个项目里更好的重用这些代码，最好的方式将这些基础库打包做成SDK进行统一维护和使用。在这个过程中也发现了一些需要注意的地方，和跟之前Swift制作framework不一样的地方。</p>
+<p>　　再说一点题外话，因为现在Swift的ABI还不够稳定以及处于老代码足够稳定的原因，所以现在市面上大部分公司提供的SDK还是以OC为主，即使有一些老的SDK有Swift的版本，处于稳定的目的，我想可能也仅仅是用Swift重写了API层。</p>
+<h5 id="注意事项一：所有类名都应该加前缀"><a href="#注意事项一：所有类名都应该加前缀" class="headerlink" title="注意事项一：所有类名都应该加前缀"></a>注意事项一：所有类名都应该加前缀</h5><p>　　没有前缀的类名有冲突的风险，因为Objective-C不像其他流行语言一样提供模块化机制来避免类名和方法名的冲突，所有类名都必须是全局唯一的。如果不加前缀，很容易给调用SDK的一方造成重命名的麻烦。这一点在Swift中被解决了，因为Swift实现了模块化机制。</p>
+<h5 id="注意事项二：所有-category-方法加前缀"><a href="#注意事项二：所有-category-方法加前缀" class="headerlink" title="注意事项二：所有 category 方法加前缀"></a>注意事项二：所有 category 方法加前缀</h5><p>　　OC里的分类可以为原生类增加自己的一些API实现，但是命名冲突的话，分类方法会被覆盖。Swift新增了extension 的特性来替代了分类。</p>
+<h5 id="注意事项三：不要将第三方库打包进-SDK"><a href="#注意事项三：不要将第三方库打包进-SDK" class="headerlink" title="注意事项三：不要将第三方库打包进 SDK"></a>注意事项三：不要将第三方库打包进 SDK</h5><p>　　尽量不要将第三方库打包进 SDK，如果要打包，最好也要将该第三方库重命名，以避免冲突。我碰到的情况是SDK本身需要用到关系存储，于是想使用FMDB库，但是又不想因为要使用FMDB给外部使用造成库的依赖。这时候如果一定要这样使用，最好就要对第三方库进行重命名。还有一种解决方案就是在SDK中使用CoreData，可以避免以来外部库来使用SQLite。</p>
+<h5 id="注意事项四：做基本的检查和测试"><a href="#注意事项四：做基本的检查和测试" class="headerlink" title="注意事项四：做基本的检查和测试"></a>注意事项四：做基本的检查和测试</h5><p>　　这个工作说起来容易做起来难，很多团队都不重视这个问题，也可能是力不从心，毕竟有时候工期短、任务重很难面面俱到。但是还是应该尽力去做，因为SDK毕竟是要给其他开发者拿去用的，如果没有一定的质量保证会有不少负面影响。保证质量可以从几个方面去做。<br>　　1. 对外的接口是否简洁易懂，这个可以通过自己构建demo工程进行试用，能发现很多显而易见的问题。<br>  　　2. 内部的核心功能必须要提供单元测试，打包的时候通过自动化测试进行覆盖，以免改动影响到其他功能呢。<br>  　　3. 团队内部对重要特性分支的修改进行CodeReView。</p>
+<h5 id="注意事项五：文档完整并且正确"><a href="#注意事项五：文档完整并且正确" class="headerlink" title="注意事项五：文档完整并且正确"></a>注意事项五：文档完整并且正确</h5><p>　　在早期的瀑布式软件开发的流程里，所有人的研发流程都依赖于文档，甚至会有专门的人员对文档进行管理和维护。然而在敏捷开发大行其道的现在，文档越来越被大家忽视，但是不可否认的是优秀简介的文档总是能增加不少的团队效率。写SDK的时候，其实还有很多用Code不能表示清楚的东西，都可以通过文档去说明。比如如何引用SDK，如何快速使用SDK，碰到问题如何提供信息进行排查错误。这些东西都可以让SDK的使用者快速上手SDK的使用、减少外部依赖、增加效率。</p>
+<h5 id="注意事项六：文档完整并且正确"><a href="#注意事项六：文档完整并且正确" class="headerlink" title="注意事项六：文档完整并且正确"></a>注意事项六：文档完整并且正确</h5><p>　　需要注意对ARM体系CPU架构的架构，有时候苹果会强制要求必须支持某个CPU版本，那么要即使更新SDK，以免给外部开发者造成影响。这个问题只能通过实时关注苹果的最新动向和使用最新的iOS系统的Beta来解决。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/18/2017-12-18-《精益创业》/" rel="next" title="“《精益创业》”">
+                <i class="fa fa-chevron-left"></i> “《精益创业》”
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/19/2018-03-18-笔试、面试复习内容/" rel="prev" title="“iOS 笔试、面试复习内容”">
+                “iOS 笔试、面试复习内容” <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhaoyunyi</p>
+              <div class="site-description motion-element" itemprop="description">赵耘谊的博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS-OC-SDK开发注意事项"><span class="nav-number">1.</span> <span class="nav-text">iOS OC SDK开发注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#注意事项一：所有类名都应该加前缀"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">注意事项一：所有类名都应该加前缀</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意事项二：所有-category-方法加前缀"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">注意事项二：所有 category 方法加前缀</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意事项三：不要将第三方库打包进-SDK"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">注意事项三：不要将第三方库打包进 SDK</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意事项四：做基本的检查和测试"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">注意事项四：做基本的检查和测试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意事项五：文档完整并且正确"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">注意事项五：文档完整并且正确</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意事项六：文档完整并且正确"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">注意事项六：文档完整并且正确</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhaoyunyi</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

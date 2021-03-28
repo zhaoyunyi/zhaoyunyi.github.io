@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="初学Python的一些小知识点 如何在mac环境下直接运行某个python脚本文件？（win不行，mac和类unix可行） 需要保证拥有python运行环境，即安装python。 在该脚本文件头部加上 #!/usr/bin/env python， #！叫做pound bang ，这个东西告诉shell 后面的用命令行进行执行。后面的路径为虚拟运行环境路径。有可能当前的运行环境有多个，比如pyth">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="“初学python的一些小知识点”">
+<meta property="og:url" content="https://lrecord.cn/2017/01/05/2017-1-5-初学python的一些小知识点/index.html">
+<meta property="og:site_name" content="Zhaoyunyi&#39;s Blog">
+<meta property="og:description" content="初学Python的一些小知识点 如何在mac环境下直接运行某个python脚本文件？（win不行，mac和类unix可行） 需要保证拥有python运行环境，即安装python。 在该脚本文件头部加上 #!/usr/bin/env python， #！叫做pound bang ，这个东西告诉shell 后面的用命令行进行执行。后面的路径为虚拟运行环境路径。有可能当前的运行环境有多个，比如pyth">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lrecord.cn/2017/01/05/2017-1-5-初学python的一些小知识点/!--￼10--%3E/images/post_images/what.jpeg">
+<meta property="og:updated_time" content="2021-03-28T01:59:59.073Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="“初学python的一些小知识点”">
+<meta name="twitter:description" content="初学Python的一些小知识点 如何在mac环境下直接运行某个python脚本文件？（win不行，mac和类unix可行） 需要保证拥有python运行环境，即安装python。 在该脚本文件头部加上 #!/usr/bin/env python， #！叫做pound bang ，这个东西告诉shell 后面的用命令行进行执行。后面的路径为虚拟运行环境路径。有可能当前的运行环境有多个，比如pyth">
+<meta name="twitter:image" content="https://lrecord.cn/2017/01/05/2017-1-5-初学python的一些小知识点/!--￼10--%3E/images/post_images/what.jpeg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lrecord.cn/2017/01/05/2017-1-5-初学python的一些小知识点/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>“初学python的一些小知识点” | Zhaoyunyi's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhaoyunyi's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Stay Hungry, Stay Foolish</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lrecord.cn/2017/01/05/2017-1-5-初学python的一些小知识点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhaoyunyi">
+      <meta itemprop="description" content="赵耘谊的博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhaoyunyi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">“初学python的一些小知识点”
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-01-05 00:00:00" itemprop="dateCreated datePublished" datetime="2017-01-05T00:00:00+08:00">2017-01-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-03-28 09:59:59" itemprop="dateModified" datetime="2021-03-28T09:59:59+08:00">2021-03-28</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="初学Python的一些小知识点"><a href="#初学Python的一些小知识点" class="headerlink" title="初学Python的一些小知识点"></a>初学Python的一些小知识点</h2><ol>
+<li><h3 id="如何在mac环境下直接运行某个python脚本文件？（win不行，mac和类unix可行）"><a href="#如何在mac环境下直接运行某个python脚本文件？（win不行，mac和类unix可行）" class="headerlink" title="如何在mac环境下直接运行某个python脚本文件？（win不行，mac和类unix可行）"></a>如何在mac环境下直接运行某个python脚本文件？（win不行，mac和类unix可行）</h3><ul>
+<li>需要保证拥有python运行环境，即安装python。</li>
+<li>在该脚本文件头部加上 #!/usr/bin/env python， #！叫做pound bang ，这个东西告诉shell 后面的用命令行进行执行。后面的路径为虚拟运行环境路径。有可能当前的运行环境有多个，比如python2 和python3 ，就要用对应的下面命令 #!/usr/bin/env python3 </li>
+<li>最后更改一下这个脚本文件的执行 权限 chmod a+x 文件名.py</li>
+<li>最后通过命令 ./文件名.py  也可以通过制定 方式运行 python3 文件名.py</li>
+</ul>
+</li>
+<li><h3 id="Python文件中的编码字符问题"><a href="#Python文件中的编码字符问题" class="headerlink" title="Python文件中的编码字符问题"></a>Python文件中的编码字符问题</h3><p>可能会有不少童鞋，会迫不及待的写上这条语句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> ’你好，张三‘  print(<span class="string">"你好，世界"</span>)</span><br></pre></td></tr></table></figure>
+<p>你会马上得到一个解释器或者编译器报给你的一个错误信息  <strong>SyntaxError: Non-ASCII character ‘\xe5’ in file </strong>  ，你的肯定内心是什么鬼？</p>
+<p><img src="!--￼10--&gt;/images/post_images/what.jpeg" alt="what"></p>
+<p>多年的程序经验告诉我们，要冷静，再思考问题，然后排查问题。让我们看看这个错误，hmm~~~ Non-ASCII character’\xe5’ in file ，好像是说没有这个ASCll 字符在这个文件里，我的第一反应是会不会不支持中文字符？赶紧写了一个</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'111'</span> <span class="keyword">print</span> <span class="string">'what is this'</span></span><br></pre></td></tr></table></figure>
+<p>发现输出正常，那么八成是不支持字符了。联想到之前说运行面的声明，那么应该是肯定要什么对应的东西了，于是通过搜索加上以下代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*- coding:utf-8 -*-  或者         </span></span><br><span class="line"><span class="comment">#coding=utf-8 或者</span></span><br><span class="line">或者 通过转成Unicode字符  <span class="keyword">print</span> <span class="string">u'中文abc'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="input-和-raw-input-有什么不同"><a href="#input-和-raw-input-有什么不同" class="headerlink" title="input 和 raw_input 有什么不同"></a>input 和 raw_input 有什么不同</h3><ul>
+<li><p>当输入为纯数字时</p>
+<p> input返回的是数值类型，如int,float</p>
+<p> raw_inpout返回的是字符串类型，string类型</p>
+</li>
+<li><p>input会计算在字符串中的数字表达式，而raw_input不会。</p>
+<p> 如输入 “57 + 3”:</p>
+<p> input会得到整数60</p>
+<p> raw_input会得到字符串”57 + 3”</p>
+</li>
+<li><p>长得这么像肯定有关系，看看具体的文档，</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input</span><span class="params">(prompt)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (eval(raw_input(prompt)))</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="逻辑运算符跟其他语言不同"><a href="#逻辑运算符跟其他语言不同" class="headerlink" title="逻辑运算符跟其他语言不同"></a>逻辑运算符跟其他语言不同</h3><p>是通过 and 、not、or 来表示逻辑运算符号，另外 if else 等代码块结尾需要 用冒号 ： 来表示这是结束的代码块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="number">10</span></span><br><span class="line"><span class="keyword">if</span> num &gt; <span class="number">0</span>:</span><br><span class="line">    print(num * <span class="number">2</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(num)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> num &gt; <span class="number">0</span> <span class="keyword">and</span> <span class="number">20</span> &gt; num :</span><br><span class="line">    print(num)</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="不一样的分行输出与整除"><a href="#不一样的分行输出与整除" class="headerlink" title="不一样的分行输出与整除"></a>不一样的分行输出与整除</h3><p><code>r&#39;&#39;</code>表示<code>&#39;&#39;</code>内部的字符串默认不转义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">r'''Hello</span></span><br><span class="line"><span class="string">world'''</span>   </span><br><span class="line"></span><br><span class="line"><span class="string">'''Hello</span></span><br><span class="line"><span class="string">world'''</span></span><br><span class="line"></span><br><span class="line">上面两个输出结果一致</span><br></pre></td></tr></table></figure>
+<p>python 还有一个 // 来表示 整除，丢弃小数点，在别的语言里 是根据除数和被除数的类型来决定是是否保留小数位。</p>
+<p>Python的整数没有大小限制，而某些语言的整数根据其存储长度是有大小限制的，例如Java对32位整数的范围限制在<code>-2147483648</code>-<code>2147483647</code>。</p>
+<p>Python的浮点数也没有大小限制，但是超出一定范围就直接表示为<code>inf</code>（无限大）</p>
+</li>
+<li><h3 id="输出字符串"><a href="#输出字符串" class="headerlink" title="输出字符串"></a>输出字符串</h3><p>python 里 的字符串输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'Hello, %s'</span> % <span class="string">'world'</span></span><br><span class="line"><span class="string">'Age: %s. Lucy: %s'</span> % (<span class="number">25</span>, <span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>作为一个写过OC的IOS工程师和写过C的嵌入式工程师，对这种字符串占位输出的模式非常熟悉，不禁让我觉得python经过解释器最后的实现肯定更C语言密不可分。</p>
+</li>
+<li><h3 id="Python-中的-list-和tuple"><a href="#Python-中的-list-和tuple" class="headerlink" title="Python 中的 list 和tuple"></a>Python 中的 list 和tuple</h3><p> list 和 tuple 就想swift 中的数组和tuple 完全不一样，甚至更其他的语言也不一样。list 叫列表或者序列，唯独不能叫数组。list 中数据的下标访问方式非常特别，常规的越界之类的更别的语言差不多</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">'张三'</span>, <span class="string">'李四'</span>, <span class="string">'王五'</span>]</span><br><span class="line">names[<span class="number">-1</span>]， names[<span class="number">-2</span>]</span><br><span class="line">names = [<span class="string">'张三'</span>, <span class="string">'李四'</span>, <span class="string">'王五'</span>, [<span class="string">'baby'</span>, <span class="string">'lucy'</span>, <span class="number">110</span>]]</span><br></pre></td></tr></table></figure>
+<p>names[-1] 能访问 list 中最后一个元素，以此类推，但是不能超过列表大小，我猜 list 的实现应该是个循环队列吧。list 内还能嵌套list，嵌套的 list 其中得元素类型，数量都能改变。</p>
+<p>touple元组有些类似 swift 中的 let array，本神touple内的元素不能改变，但是嵌套的list缺可以改变，从指针的角度去看就是不能改变指针引用，但是能改变指针引用的对应控件的数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">t = (<span class="string">'a'</span>, <span class="string">'b'</span>, [<span class="string">'A'</span>, <span class="string">'B'</span>])</span><br><span class="line">t[<span class="number">2</span>][<span class="number">0</span>] = <span class="string">'C'</span></span><br><span class="line">t[<span class="number">2</span>][<span class="number">1</span>] = <span class="string">'D'</span> <span class="comment">#看起来可以作为二维数组进行操作</span></span><br></pre></td></tr></table></figure>
+<p>最后关于touple还有一个需要注意的地方，定义一个touple 数据 和空touple</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">t = ()   # 空的touple</span><br><span class="line">t = (1,) #而不是  t = (1)， t = (1)会被看做是 t = 1，括号会被解释为运算符优先级括号</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/04/2017-1-4-搭好自己的博客/" rel="next" title="“搭好自己的博客”">
+                <i class="fa fa-chevron-left"></i> “搭好自己的博客”
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/07/2017-1-7-初学python的一些小知识点(二)/" rel="prev" title="“初学Python的一些小知识点(二)”">
+                “初学Python的一些小知识点(二)” <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhaoyunyi</p>
+              <div class="site-description motion-element" itemprop="description">赵耘谊的博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初学Python的一些小知识点"><span class="nav-number">1.</span> <span class="nav-text">初学Python的一些小知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何在mac环境下直接运行某个python脚本文件？（win不行，mac和类unix可行）"><span class="nav-number">1.1.</span> <span class="nav-text">如何在mac环境下直接运行某个python脚本文件？（win不行，mac和类unix可行）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python文件中的编码字符问题"><span class="nav-number">1.2.</span> <span class="nav-text">Python文件中的编码字符问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#input-和-raw-input-有什么不同"><span class="nav-number">1.3.</span> <span class="nav-text">input 和 raw_input 有什么不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑运算符跟其他语言不同"><span class="nav-number">1.4.</span> <span class="nav-text">逻辑运算符跟其他语言不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不一样的分行输出与整除"><span class="nav-number">1.5.</span> <span class="nav-text">不一样的分行输出与整除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出字符串"><span class="nav-number">1.6.</span> <span class="nav-text">输出字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-中的-list-和tuple"><span class="nav-number">1.7.</span> <span class="nav-text">Python 中的 list 和tuple</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhaoyunyi</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

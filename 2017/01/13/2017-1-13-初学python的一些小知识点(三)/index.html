@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="初学Python的一些小知识点(三)函数​    在大部分高级语言里，函数的用来抽象计算表达式的，可以通过简单是输入输出以及返回值得到一个计算结果，而不需要关系具体的实现。python 里的函数需要注意，函数名其实就是指向一个函数对象的引用，完全可以把函数名赋给一个变量，相当于给这个函数起了一个“别名” 12a = abs # 变量a指向abs函数print(a(-1)) # 所以也可以通过a调">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="“初学python的一些小知识点(三)”">
+<meta property="og:url" content="https://lrecord.cn/2017/01/13/2017-1-13-初学python的一些小知识点(三)/index.html">
+<meta property="og:site_name" content="Zhaoyunyi&#39;s Blog">
+<meta property="og:description" content="初学Python的一些小知识点(三)函数​    在大部分高级语言里，函数的用来抽象计算表达式的，可以通过简单是输入输出以及返回值得到一个计算结果，而不需要关系具体的实现。python 里的函数需要注意，函数名其实就是指向一个函数对象的引用，完全可以把函数名赋给一个变量，相当于给这个函数起了一个“别名” 12a = abs # 变量a指向abs函数print(a(-1)) # 所以也可以通过a调">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-03-28T01:59:59.073Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="“初学python的一些小知识点(三)”">
+<meta name="twitter:description" content="初学Python的一些小知识点(三)函数​    在大部分高级语言里，函数的用来抽象计算表达式的，可以通过简单是输入输出以及返回值得到一个计算结果，而不需要关系具体的实现。python 里的函数需要注意，函数名其实就是指向一个函数对象的引用，完全可以把函数名赋给一个变量，相当于给这个函数起了一个“别名” 12a = abs # 变量a指向abs函数print(a(-1)) # 所以也可以通过a调">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lrecord.cn/2017/01/13/2017-1-13-初学python的一些小知识点(三)/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>“初学python的一些小知识点(三)” | Zhaoyunyi's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhaoyunyi's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Stay Hungry, Stay Foolish</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lrecord.cn/2017/01/13/2017-1-13-初学python的一些小知识点(三)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhaoyunyi">
+      <meta itemprop="description" content="赵耘谊的博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhaoyunyi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">“初学python的一些小知识点(三)”
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-01-13 00:00:00" itemprop="dateCreated datePublished" datetime="2017-01-13T00:00:00+08:00">2017-01-13</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-03-28 09:59:59" itemprop="dateModified" datetime="2021-03-28T09:59:59+08:00">2021-03-28</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="初学Python的一些小知识点-三"><a href="#初学Python的一些小知识点-三" class="headerlink" title="初学Python的一些小知识点(三)"></a>初学Python的一些小知识点(三)</h2><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>​    在大部分高级语言里，函数的用来抽象计算表达式的，可以通过简单是输入输出以及返回值得到一个计算结果，而不需要关系具体的实现。python 里的函数需要注意，函数名其实就是指向一个函数对象的引用，完全可以把函数名赋给一个变量，相当于给这个函数起了一个“别名”</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = abs <span class="comment"># 变量a指向abs函数</span></span><br><span class="line">print(a(<span class="number">-1</span>)) <span class="comment"># 所以也可以通过a调用abs函数</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>定义函数：python 定义函数的方式有点不同。在Python中，定义一个函数要使用<code>def</code>语句，依次写出函数名、括号、括号中的参数和冒号<code>:</code>，然后，在缩进块中编写函数体，函数的返回值用<code>return</code>语句返回。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_abs</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> -x</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">print(my_abs(<span class="number">-100</span>))</span><br></pre></td></tr></table></figure>
+<p>拥有了我们自己的函数之后，我们尝试输入别的输入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my_abs(<span class="string">'a'</span>) <span class="comment"># 报错信息</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>会发现输入字符的时候会出错，那么是不是能添加添加多类型支持呢？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_abs</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(x, (int, float)):</span><br><span class="line">        <span class="keyword">raise</span> TypeError(<span class="string">'bad operand type for %s'</span>, x)</span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> -x</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<p>改造完的自定义函数能接受特定类型的参数，并返回对应的错误信息。</p>
+</li>
+<li><p>空函数：</p>
+<p>   如果想定义一个什么事也不做的空函数，可以用<code>pass</code>语句：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nodo</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数的多个返回值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">twoReturn</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> x == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> x * <span class="number">2</span>, x * <span class="number">3</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">x, y = twoReturn(<span class="number">1</span>)</span><br><span class="line">print(x, y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回(2, 3)  看起来是个元组touple</span></span><br><span class="line">b = twoReturn(<span class="number">1</span>)</span><br><span class="line">print(b[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出 2</span></span><br></pre></td></tr></table></figure>
+<p>python 里的多个参数返回和swift 是一样的，也是通过元组的形式返回。</p>
+</li>
+</ul>
+<h3 id="函数的参数"><a href="#函数的参数" class="headerlink" title="函数的参数"></a>函数的参数</h3><p>​    Python的函数定义非常简单，但灵活度却非常大。除了正常定义的必选参数外，还可以使用默认参数、可变参数和关键字参数，使得函数定义出来的接口，不但能处理复杂的参数，还可以简化调用者的代码。</p>
+<ul>
+<li><h4 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h4><p><code>x</code>和<code>y</code>，这两个参数都是位置参数，调用函数时，传入的两个值按照位置顺序依次赋给参数<code>x</code>和<code>y</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simple</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line">print(simple(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"><span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h4><p>当一个函数的参数可以有默认值的时候就需要一个默认参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simple</span><span class="params">(x, y = <span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line">print(simple(<span class="number">1</span>))</span><br><span class="line"><span class="comment"># 1</span></span><br></pre></td></tr></table></figure>
+<p>使用默认参数的注意事项，需要注意默认参数必须指向不变对象。不然就会有以下代码的情况出现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_end</span><span class="params">(a=[])</span>:</span></span><br><span class="line">    a.append(<span class="string">'END'</span>)</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line"></span><br><span class="line">print(add_end([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]))</span><br><span class="line">print(add_end())</span><br><span class="line">print(add_end())</span><br><span class="line"><span class="comment"># [1, 2, 3, 'END']</span></span><br><span class="line"><span class="comment"># ['END']</span></span><br><span class="line"><span class="comment"># ['END', 'END']</span></span><br></pre></td></tr></table></figure>
+<p>​    默认参数在函数创建的时候就已经建立了指针索引，当调用有修改参数对象的时候，该修改会一直被保留，所以再定义函数或者变量的时候要再可以肯定的情况下多定义不可变对象，保证程序的的健壮，降低出错的概率。</p>
+</li>
+<li><h3 id="定义可变参数"><a href="#定义可变参数" class="headerlink" title="定义可变参数"></a>定义可变参数</h3><p>定义可变参数和定义一个list或tuple参数相比，仅仅在参数前面加了一个<code>*</code>号。 后面就可以加入任意参数变量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc</span><span class="params">(*numbers)</span>:</span></span><br><span class="line">    sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> numbers:</span><br><span class="line">        sum = sum + n * n</span><br><span class="line">    <span class="keyword">return</span> sump</span><br><span class="line"></span><br><span class="line">print(calc(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">print(calc(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>))</span><br><span class="line">print(calc())</span><br><span class="line"></span><br><span class="line"><span class="comment">#5</span></span><br><span class="line"><span class="comment">#30</span></span><br><span class="line"><span class="comment">#0</span></span><br></pre></td></tr></table></figure>
+<p>如要要完整传入某个数组作为参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nums = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">print(calc(nums[<span class="number">1</span>]))</span><br><span class="line">print(calc(*nums)) <span class="comment"># 将list中所有的元素都作为参数传入</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h4><p>关键字参数能将不是必要填入的参数，作为 dict 传入，并且不限数量。这样做的目的是为了扩展函数的功能，让函数用更强的通用性。下面来看一个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关键字参数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(name, gender, **dict)</span>:</span></span><br><span class="line">    print(<span class="string">'name:'</span>, name, <span class="string">'gender:'</span>, gender, <span class="string">'otherDict:'</span>, dict)</span><br><span class="line"></span><br><span class="line">register(<span class="string">'judy'</span>, <span class="string">'woman'</span>)</span><br><span class="line">register(<span class="string">'mike'</span>, <span class="string">'man'</span>, age = <span class="string">'13'</span>, phone = <span class="string">'123456'</span>, city = <span class="string">'New York'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#也可以将一个完整dict 作为参数传入</span></span><br><span class="line">dictRegister = &#123;<span class="string">'age'</span>: <span class="string">'20'</span>, <span class="string">'phone'</span>: <span class="string">'66666'</span>, <span class="string">'city'</span>: <span class="string">'New York'</span>&#125;</span><br><span class="line">register(<span class="string">'Bob'</span>, <span class="string">'man'</span>, **dictRegister)</span><br></pre></td></tr></table></figure>
+<p>需要注意的是这个 dictRegister 传入的是一份拷贝，而不是引用，简单的来说就是值拷贝，修改函数内 dict 的内容并不会影响 函数外的 dictRegister。</p>
+</li>
+<li><h4 id="命名关键字参数"><a href="#命名关键字参数" class="headerlink" title="命名关键字参数"></a>命名关键字参数</h4><p>对于关键字参数，函数的调用者可以传入任意不受限制的关键字参数。至于到底传入了哪些，就需要在函数内部对需要的 key-value 进行检查。将上面的函数改造一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(name, gender, **dict)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'city'</span> <span class="keyword">in</span> dict:</span><br><span class="line">        <span class="comment"># 有city参数</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'job'</span> <span class="keyword">in</span> dict:</span><br><span class="line">        <span class="comment"># 有job参数</span></span><br><span class="line">        print(<span class="string">'have a job'</span>)</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    print(<span class="string">'name:'</span>, name, <span class="string">'gender:'</span>, gender, <span class="string">'otherDict:'</span>, dict)</span><br><span class="line">    </span><br><span class="line">register(<span class="string">'Bob'</span>, <span class="string">'man'</span>, city = <span class="string">'New York'</span>, job = <span class="string">'SaleMan'</span>)</span><br></pre></td></tr></table></figure>
+<p>得到这个函数之后，发现可以自由输入别的参数，只是在函数内部做了检验，那么现在如果要限制关键字参数的名字，就可以用命名关键字参数，例如，只接收<code>city</code>和<code>job</code>作为关键字参数。这种方式定义的函数如下：<font color="red">（不清楚为什么编译不过，需要查下资料再补充该内容）</font></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(name, gender, *, city, job)</span>:</span></span><br><span class="line">    print(name, gender, city, job)</span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="参数组合"><a href="#参数组合" class="headerlink" title="参数组合"></a>参数组合</h4><p>在Python中定义函数，可以用必选参数、默认参数、可变参数、关键字参数和命名关键字参数，这5种参数都可以组合使用。但是请注意，参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/10/2017-1-10-RxSwift 学习+实战系列——资料大全/" rel="next" title="“RxSwift学习+实战系列——资料大全”">
+                <i class="fa fa-chevron-left"></i> “RxSwift学习+实战系列——资料大全”
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/04/2017-2-4-Hexo博客-如何文章里面放入图片/" rel="prev" title="Hexo博客-如何文章里面放入图片">
+                Hexo博客-如何文章里面放入图片 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhaoyunyi</p>
+              <div class="site-description motion-element" itemprop="description">赵耘谊的博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初学Python的一些小知识点-三"><span class="nav-number">1.</span> <span class="nav-text">初学Python的一些小知识点(三)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">1.1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的参数"><span class="nav-number">1.2.</span> <span class="nav-text">函数的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#位置参数"><span class="nav-number">1.2.1.</span> <span class="nav-text">位置参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认参数"><span class="nav-number">1.2.2.</span> <span class="nav-text">默认参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义可变参数"><span class="nav-number">1.3.</span> <span class="nav-text">定义可变参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键字参数"><span class="nav-number">1.3.1.</span> <span class="nav-text">关键字参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命名关键字参数"><span class="nav-number">1.3.2.</span> <span class="nav-text">命名关键字参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数组合"><span class="nav-number">1.3.3.</span> <span class="nav-text">参数组合</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhaoyunyi</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
